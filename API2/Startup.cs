@@ -29,6 +29,8 @@ namespace API2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IServiceCalculaJuros, CalculaJurosServices>();
+            services.AddTransient<IShowMeTheCodeServices, ShowMeTheCodeServices>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
 

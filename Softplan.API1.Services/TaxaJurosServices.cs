@@ -21,8 +21,6 @@ namespace Softplan.API1.Services
 
         public Juros GetTaxaJuros()
         {
-            var padroes = new System.Globalization.CultureInfo("pt-BR");
-
             Juros taxaJuros = new Juros()
             {
                 TaxaJuros =  "0,01"

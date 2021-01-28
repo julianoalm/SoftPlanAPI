@@ -29,15 +29,29 @@ namespace Softplan.API2.Services
 
         public CalculaJurosDTO CalculaJuros(CalculaJurosParametro param)
         {
-            TaxaJuros();
+            CalculaJurosDTO calculo;
 
-            decimal valorCalculado = Pow(param.ValorInicial * (1 + Convert.ToDecimal(taxaJuros.TaxaJuros)), (uint)param.Meses);
-            CalculaJurosDTO calculo = new CalculaJurosDTO()
+            try
             {
-                ValorFinal = Math.Truncate(100 * valorCalculado) / 100
-            };
+                TaxaJuros();
 
-            return calculo;
+                if (param.ValorInicial > 0 && param.Meses > 0)
+                {
+                    decimal valorCalculado = Pow(param.ValorInicial * (1 + Convert.ToDecimal(taxaJuros.TaxaJuros)), (uint)param.Meses);
+                    calculo = new CalculaJurosDTO()
+                    {
+                        ValorFinal = Math.Truncate(100 * valorCalculado) / 100
+                    };
+                }
+                else
+                    throw new Exception("Os parâmetros ValorInicial e Meses são obrigatórios!");
+
+                return calculo;
+            }
+            catch (Exception ex)
+            {                
+                throw new Exception(ex.Message);
+            }
         }
 
         private async void TaxaJuros()

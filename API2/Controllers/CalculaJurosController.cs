@@ -29,14 +29,19 @@ namespace Softplan.API2.Controllers
         {
             try
             {
-                CalculaJurosParametro param = new CalculaJurosParametro()
+                if (valorInicial > 0 && meses > 0)
                 {
-                    ValorInicial = valorInicial,
-                    Meses = meses
-                };
+                    CalculaJurosParametro param = new CalculaJurosParametro()
+                    {
+                        ValorInicial = valorInicial,
+                        Meses = meses
+                    };
 
-                var juros = this._service.CalculaJuros(param);
-                return Ok(juros);
+                    var juros = this._service.CalculaJuros(param);
+                    return Ok(juros);
+                }
+
+                return BadRequest("Os parâmetros ValorInicial e Meses são obrigatórios!");
             }
             catch (Exception ex)
             {
